@@ -42,3 +42,10 @@ model File {
   folder    Folder?  @relation(fields: [folderId], references: [id])
   folderId  String?
 }
+
+model Session {
+  id        String   @id @default(uuid())
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}

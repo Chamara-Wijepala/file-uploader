@@ -19,10 +19,12 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
 			},
 		});
 
-		console.log(newUser);
-	});
+		req.login(newUser, (err) => {
+			if (err) next(err);
 
-	res.redirect('/');
+			res.redirect('/');
+		});
+	});
 };
 
 export default {
