@@ -53,6 +53,12 @@ app.get('/', (req, res) => {
 });
 app.use('/signup', signupRoutes);
 app.use('/login', loginRoutes);
+app.use('/logout', (req, res, next) => {
+	req.logout((err) => {
+		if (err) return next(err);
+		res.redirect('/');
+	});
+});
 
 app.use(errorHandler);
 

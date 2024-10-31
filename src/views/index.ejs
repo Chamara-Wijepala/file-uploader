@@ -5,6 +5,7 @@
 <body>
   <% if (currentUser) { %>
   <h1>Welcome, <%= currentUser.username %></h1>
+  <a href="/logout">Log out</a>
   <% } else { %>
   <h1>Welcome!</h1>
   <p>
