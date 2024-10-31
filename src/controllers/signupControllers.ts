@@ -10,7 +10,7 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
 	const { username, password } = req.body;
 
 	bcrypt.hash(password, 10, async (err, hash) => {
-		if (err) next(err);
+		if (err) return next(err);
 
 		const newUser = await prisma.user.create({
 			data: {
@@ -20,7 +20,7 @@ const createUser = (req: Request, res: Response, next: NextFunction) => {
 		});
 
 		req.login(newUser, (err) => {
-			if (err) next(err);
+			if (err) return next(err);
 
 			res.redirect('/');
 		});

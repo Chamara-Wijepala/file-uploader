@@ -9,7 +9,7 @@ const checkValidationErrors = (
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
-		next(errors.array());
+		return next(errors.array());
 	}
 
 	next();
