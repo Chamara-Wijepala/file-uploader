@@ -7,6 +7,7 @@ import passport from 'passport';
 import errorHandler from './middleware/errorHandler';
 import signupRoutes from './routes/signupRoutes';
 import loginRoutes from './routes/loginRoutes';
+import driveRoutes from './routes/driveRoutes';
 
 import prisma from './db/client';
 
@@ -59,6 +60,14 @@ app.use('/logout', (req, res, next) => {
 		res.redirect('/');
 	});
 });
+
+// Require users to be authenticated after this point
+app.use((req, res, next) => {
+	if (!req.isAuthenticated()) return res.redirect('/');
+	next();
+});
+
+app.use('/drive', driveRoutes);
 
 app.use(errorHandler);
 
