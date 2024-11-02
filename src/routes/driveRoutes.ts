@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import driveController from '../controllers/driveController';
+import validateFolder from '../validators/validateFolder';
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -16,5 +17,6 @@ const router = express.Router();
 
 router.get('/', driveController.getDrivePage);
 router.post('/', upload.single('file'), driveController.uploadFile);
+router.post('/folder', validateFolder, driveController.createFolder);
 
 export default router;
