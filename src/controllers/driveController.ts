@@ -78,8 +78,33 @@ const createFolder = async (
 	}
 };
 
+const renameFolder = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const newName = req.body['update-name'];
+	const folderId = req.params.id;
+
+	try {
+		await prisma.folder.update({
+			where: {
+				id: folderId,
+			},
+			data: {
+				name: newName,
+			},
+		});
+
+		res.redirect('/drive');
+	} catch (err) {
+		next(err);
+	}
+};
+
 export default {
 	getDrivePage,
 	uploadFile,
 	createFolder,
+	renameFolder,
 };

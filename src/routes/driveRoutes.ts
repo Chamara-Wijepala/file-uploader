@@ -17,6 +17,11 @@ const router = express.Router();
 
 router.get('/', driveController.getDrivePage);
 router.post('/', upload.single('file'), driveController.uploadFile);
-router.post('/folder', validateFolder, driveController.createFolder);
+router.post('/folder', validateFolder.FolderName, driveController.createFolder);
+router.post(
+	'/folder/update/:id',
+	validateFolder.NewFolderName,
+	driveController.renameFolder
+);
 
 export default router;

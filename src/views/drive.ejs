@@ -21,11 +21,7 @@
   <% if (folders) { %>
   <div>
     <% for(let i = 0; i < folders.length; i++) { %>
-    <div>
-      <p><%= folders[i].name %></p>
-      <p><%= folders[i].createdAt %></p>
-      <p><%= folders[i].updatedAt %></p>
-    </div>
+    <%- include('./partials/folder.ejs', {i}) %>
     <% } %>
   </div>
   <% } %>

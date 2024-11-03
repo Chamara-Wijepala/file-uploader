@@ -1,0 +1,14 @@
+<div>
+  <p><%= folders[i].name %></p>
+  <p><%= folders[i].createdAt %></p>
+  <p><%= folders[i].updatedAt %></p>
+
+
+  <form action="/drive/folder/update/<%= folders[i].id %>" method="post">
+    <label for="update-name">New name:</label>
+    <input type="text" name="update-name" id="update-name" required>
+
+    <button type="submit">Rename</button>
+  </form>
+
+</div>

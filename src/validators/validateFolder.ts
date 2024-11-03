@@ -1,7 +1,7 @@
 import { body } from 'express-validator';
 import prisma from '../db/client';
 
-const validateFolder = [
+const FolderName = [
 	body('folder-name')
 		.trim()
 		.notEmpty()
@@ -20,4 +20,15 @@ const validateFolder = [
 		.escape(),
 ];
 
-export default validateFolder;
+const NewFolderName = [
+	body('update-name')
+		.trim()
+		.notEmpty()
+		.withMessage('Folder name is required.')
+		.escape(),
+];
+
+export default {
+	FolderName,
+	NewFolderName,
+};
