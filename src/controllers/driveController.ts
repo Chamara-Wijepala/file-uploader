@@ -24,7 +24,6 @@ const getDrivePage = async (req: Request, res: Response) => {
 };
 
 const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
-	console.log(req.file);
 	const { file } = req;
 
 	if (!file) {
