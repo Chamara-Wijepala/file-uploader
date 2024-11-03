@@ -1,8 +1,10 @@
 <div>
-  <p><%= folders[i].name %></p>
+  <a href="/drive/folder/<%= folders[i].id %>">
+    <%= folders[i].name %>
+  </a>
+
   <p><%= folders[i].createdAt %></p>
   <p><%= folders[i].updatedAt %></p>
-
 
   <form action="/drive/folder/update/<%= folders[i].id %>" method="post">
     <label for="update-name">New name:</label>

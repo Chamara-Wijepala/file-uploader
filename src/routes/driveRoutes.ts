@@ -16,7 +16,10 @@ const upload = multer({ storage });
 const router = express.Router();
 
 router.get('/', driveController.getDrivePage);
+router.get('/folder/:id', driveController.getFolder);
+
 router.post('/', upload.single('file'), driveController.uploadFile);
+router.post('/:id', upload.single('file'), driveController.uploadFile);
 router.post('/folder', validateFolder.FolderName, driveController.createFolder);
 router.post(
 	'/folder/update/:id',

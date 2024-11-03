@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+<body>
+  <h1><%= folder.name %></h1>
+
+  <h2>New file</h2>
+  <form action="/drive/<%= folder.id %>" method="post" enctype="multipart/form-data">
+    <input type="file" id="file" name="file" required>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+
+</html>

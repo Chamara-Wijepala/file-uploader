@@ -25,6 +25,7 @@ const getDrivePage = async (req: Request, res: Response) => {
 
 const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
 	const { file } = req;
+	const folderId = req.params.id;
 
 	if (!file) {
 		const err = new Error('There was an error when uploading the file.');
@@ -42,10 +43,11 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
 				name: file.filename,
 				sizeBytes: file.size,
 				ownerId: req.user.id,
+				folderId,
 			},
 		});
 
-		res.redirect('/drive');
+		res.redirect(`/drive/${folderId}`);
 	} catch (err) {
 		next(err);
 	}
@@ -73,6 +75,22 @@ const createFolder = async (
 		});
 
 		res.redirect('/drive');
+	} catch (err) {
+		next(err);
+	}
+};
+
+const getFolder = async (req: Request, res: Response, next: NextFunction) => {
+	const folderId = req.params.id;
+
+	try {
+		const folder = await prisma.folder.findUnique({
+			where: {
+				id: folderId,
+			},
+		});
+
+		res.render('folder-page', { folder });
 	} catch (err) {
 		next(err);
 	}
@@ -126,6 +144,7 @@ export default {
 	getDrivePage,
 	uploadFile,
 	createFolder,
+	getFolder,
 	renameFolder,
 	deleteFolder,
 };
