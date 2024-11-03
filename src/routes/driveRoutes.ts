@@ -23,5 +23,6 @@ router.post(
 	validateFolder.NewFolderName,
 	driveController.renameFolder
 );
+router.post('/folder/delete/:id', driveController.deleteFolder);
 
 export default router;

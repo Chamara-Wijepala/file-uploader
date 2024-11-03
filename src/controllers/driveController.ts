@@ -102,9 +102,30 @@ const renameFolder = async (
 	}
 };
 
+const deleteFolder = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const folderId = req.params.id;
+
+	try {
+		await prisma.folder.delete({
+			where: {
+				id: folderId,
+			},
+		});
+
+		res.redirect('/drive');
+	} catch (err) {
+		next(err);
+	}
+};
+
 export default {
 	getDrivePage,
 	uploadFile,
 	createFolder,
 	renameFolder,
+	deleteFolder,
 };
