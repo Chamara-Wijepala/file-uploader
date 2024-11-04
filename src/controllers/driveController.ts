@@ -47,7 +47,9 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
 			},
 		});
 
-		res.redirect(`/drive/${folderId}`);
+		folderId
+			? res.redirect(`/drive/folder/${folderId}`)
+			: res.redirect('/drive');
 	} catch (err) {
 		next(err);
 	}
