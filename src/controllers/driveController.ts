@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import prisma from '../db/client';
+import cloudinary from '../config/cloudinary';
 
 const getDrivePage = async (req: Request, res: Response) => {
 	// TS thinks req.user could possibly be undefined even though it was checked
@@ -37,10 +38,20 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
 		return res.redirect('/login');
 	}
 
+	// Convert buffer to base64
+	const b64 = Buffer.from(file.buffer).toString('base64');
+	const dataURI = 'data:' + file.mimetype + ';base64,' + b64;
+
 	try {
+		const result = await cloudinary.uploader.upload(dataURI, {
+			folder: 'uploads',
+			resource_type: 'auto',
+		});
+
 		await prisma.file.create({
 			data: {
-				name: file.filename,
+				name: file.originalname,
+				url: result.secure_url,
 				sizeBytes: file.size,
 				ownerId: req.user.id,
 				folderId,
