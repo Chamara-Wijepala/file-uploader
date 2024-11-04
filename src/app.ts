@@ -43,12 +43,6 @@ app.use((req, res, next) => {
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-// DEV ONLY. REMOVE LATER
-// (async () => {
-// 	const users = await prisma.user.findMany();
-// 	console.log(users);
-// })();
-
 app.get('/', (req, res) => {
 	res.render('index');
 });
