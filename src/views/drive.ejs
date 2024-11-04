@@ -18,13 +18,21 @@
     <button type="submit">Add</button>
   </form>
 
-  <% if (folders) { %>
   <div>
     <% for(let i = 0; i < folders.length; i++) { %>
     <%- include('./partials/folder.ejs', {i}) %>
     <% } %>
+
+    <% for(let i = 0; i < files.length; i++) { %>
+    <div>
+      <a href="/drive/file/<%= files[i].id %>">
+        <%= files[i].name %>
+      </a>
+      <p><%= files[i].createdAt %></p>
+      <p><%= files[i].updatedAt %></p>
+    </div>
+    <% } %>
   </div>
-  <% } %>
 
 </body>
 

@@ -21,7 +21,20 @@ const getDrivePage = async (req: Request, res: Response) => {
 		},
 	});
 
-	res.render('drive', { folders });
+	const files = await prisma.file.findMany({
+		where: {
+			ownerId: req.user.id,
+			folderId: null,
+		},
+		select: {
+			id: true,
+			name: true,
+			createdAt: true,
+			updatedAt: true,
+		},
+	});
+
+	res.render('drive', { folders, files });
 };
 
 const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
@@ -96,6 +109,10 @@ const createFolder = async (
 const getFolder = async (req: Request, res: Response, next: NextFunction) => {
 	const folderId = req.params.id;
 
+	if (!req.isAuthenticated()) {
+		return res.redirect('/login');
+	}
+
 	try {
 		const folder = await prisma.folder.findUnique({
 			where: {
@@ -103,7 +120,20 @@ const getFolder = async (req: Request, res: Response, next: NextFunction) => {
 			},
 		});
 
-		res.render('folder-page', { folder });
+		const files = await prisma.file.findMany({
+			where: {
+				ownerId: req.user.id,
+				folderId,
+			},
+			select: {
+				id: true,
+				name: true,
+				createdAt: true,
+				updatedAt: true,
+			},
+		});
+
+		res.render('folder-page', { folder, files });
 	} catch (err) {
 		next(err);
 	}
