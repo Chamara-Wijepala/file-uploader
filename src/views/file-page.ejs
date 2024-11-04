@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+
+<body>
+  <h1><%= file.name %></h1>
+  <p>owned by: <%= file.owner.username %></p>
+
+  <div>
+    <p>Size: <%= file.sizeBytes %></p>
+    <p>Uploaded: <%= file.createdAt %></p>
+  </div>
+</body>
+
+</html>

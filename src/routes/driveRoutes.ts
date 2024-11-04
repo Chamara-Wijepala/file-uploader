@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get('/', driveController.getDrivePage);
 router.get('/folder/:id', driveController.getFolder);
+router.get('/file/:id', driveController.getFile);
 
 router.post('/', upload.single('file'), driveController.uploadFile);
 router.post('/:id', upload.single('file'), driveController.uploadFile);

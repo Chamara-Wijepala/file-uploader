@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import prisma from '../db/client';
 import cloudinary from '../config/cloudinary';
 
+// pages
 const getDrivePage = async (req: Request, res: Response) => {
 	// TS thinks req.user could possibly be undefined even though it was checked
 	// earlier in the custom middleware in app.ts
@@ -37,6 +38,7 @@ const getDrivePage = async (req: Request, res: Response) => {
 	res.render('drive', { folders, files });
 };
 
+// files
 const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
 	const { file } = req;
 	const folderId = req.params.id;
@@ -79,6 +81,33 @@ const uploadFile = async (req: Request, res: Response, next: NextFunction) => {
 	}
 };
 
+const getFile = async (req: Request, res: Response, next: NextFunction) => {
+	const fileId = req.params.id;
+
+	try {
+		const file = await prisma.file.findUnique({
+			where: {
+				id: fileId,
+			},
+			select: {
+				name: true,
+				sizeBytes: true,
+				createdAt: true,
+				owner: {
+					select: {
+						username: true,
+					},
+				},
+			},
+		});
+
+		res.render('file-page', { file });
+	} catch (err) {
+		next(err);
+	}
+};
+
+// folders
 const createFolder = async (
 	req: Request,
 	res: Response,
@@ -186,6 +215,7 @@ const deleteFolder = async (
 export default {
 	getDrivePage,
 	uploadFile,
+	getFile,
 	createFolder,
 	getFolder,
 	renameFolder,
